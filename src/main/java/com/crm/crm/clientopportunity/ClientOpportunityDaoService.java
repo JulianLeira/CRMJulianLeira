@@ -55,7 +55,10 @@ public class ClientOpportunityDaoService {
 		return client;
 	}
 
-	
+	// Change opp to client
+	public void setOpportunityAsClient(int id) {
+		findClientOpportunityById(id).setClient(true);
+	}
 
 	// Delete Client
 	public void deleteClient(int id) {
