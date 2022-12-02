@@ -20,10 +20,9 @@ class CrmApplicationTests {
 	@Test
 	void whenContactResultTrue_CliOppClientIsTrue() {
 		ClientOpportunity opportunity= cliOpp.findAllOpportunities().get(0);
-		boolean isClient= opportunity.isClient();
+		boolean isClient= opportunity.getClient();
 		cliOpp.setOpportunityAsClient(opportunity.getIdClientOpp());
-		
-		assertNotEquals(isClient, opportunity.isClient());
+		assertNotEquals(isClient, opportunity.getClient());
 	}
 
 }

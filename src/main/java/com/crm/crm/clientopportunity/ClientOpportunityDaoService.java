@@ -1,6 +1,5 @@
 package com.crm.crm.clientopportunity;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -14,22 +13,29 @@ import com.crm.crm.contact.Contact;
 public class ClientOpportunityDaoService {
 
 	private static List<ClientOpportunity> clientOppotunities = new ArrayList<>();
-	private static List<Contact> contacts = new ArrayList<>();
 	private static int idCliopp = 0;
 	private static int idCont = 0;
 
 	static {
-		clientOppotunities
-				.add(new ClientOpportunity(++idCliopp, "Julian", "Leira", "julian@solera.com","123456789", contacts, false));
-		clientOppotunities.add(new ClientOpportunity(++idCliopp, "Juan", "Valdes", "Juan@solera.com","123456789", contacts, true));
-		contacts.add(new Contact(++idCont, "email", "", false, LocalDate.now().minusMonths(1)));
+		clientOppotunities.add(new ClientOpportunity(++idCliopp, "Julian", "Leira", "123456789", "julian@solera.com",
+				false));
+		clientOppotunities.add(
+				new ClientOpportunity(++idCliopp, "Juan", "Varela", "123456789", "Fernando@solera.com",  true));
+		clientOppotunities.add(new ClientOpportunity(++idCliopp, "Juan", " Garcia", "123456789", "julian@solera.com",
+				false));
+		clientOppotunities.add(
+				new ClientOpportunity(++idCliopp, "Mati", "Valdes", "123456789", "Mati@solera.com",  true));
+		clientOppotunities.add(new ClientOpportunity(++idCliopp, "Fran", "Gonzalez", "123456789", "julian@solera.com",
+				 false));
+		clientOppotunities.add(
+				new ClientOpportunity(++idCliopp, "Fran", "Valdes", "123456789", "Juan@solera.com", true));
 	}
 
 	// Get all clients
 	public List<ClientOpportunity> findAllClients() {
 		List<ClientOpportunity> clients = new ArrayList<>();
 		for (ClientOpportunity clientOpportunity : clientOppotunities) {
-			if (clientOpportunity.isClient()) {
+			if (clientOpportunity.getClient()) {
 				clients.add(clientOpportunity);
 			}
 		}
@@ -40,7 +46,7 @@ public class ClientOpportunityDaoService {
 	public List<ClientOpportunity> findAllOpportunities() {
 		List<ClientOpportunity> clients = new ArrayList<>();
 		for (ClientOpportunity clientOpportunity : clientOppotunities) {
-			if (!clientOpportunity.isClient()) {
+			if (!clientOpportunity.getClient()) {
 				clients.add(clientOpportunity);
 			}
 		}
@@ -50,6 +56,7 @@ public class ClientOpportunityDaoService {
 	// Create and add new CliOpp
 	public ClientOpportunity saveClientOpportunity(ClientOpportunity client) {
 		client.setIdClientOpp(++idCliopp);
+		client.setContacts(new ArrayList<>());
 		client.setClient(false);
 		clientOppotunities.add(client);
 		return client;
@@ -62,7 +69,7 @@ public class ClientOpportunityDaoService {
 
 	// Delete Client
 	public void deleteClient(int id) {
-		clientOppotunities.remove(id);
+		clientOppotunities.remove(findClientOpportunityById(id));
 	}
 
 	// Find CliOpp by Id
@@ -98,6 +105,9 @@ public class ClientOpportunityDaoService {
 	public ClientOpportunity addContactToClient(Contact contact, int id) {
 		ClientOpportunity client = findClientOpportunityById(id);
 		contact.setIdContact(++idCont);
+		if(contact.isResult()) {
+			client.setClient(true);
+		}
 		client.addContact(contact);
 		return client;
 	}

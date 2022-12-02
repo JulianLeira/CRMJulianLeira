@@ -1,5 +1,6 @@
 package com.crm.crm.clientopportunity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.crm.crm.contact.Contact;
@@ -20,15 +21,14 @@ public class ClientOpportunity {
 	}
 
 
-	public ClientOpportunity(int idClientOpp, String name, String lastname, String phone, String email,
-			List<Contact> contacts, boolean isClient) {
+	public ClientOpportunity(int idClientOpp, String name, String lastname, String phone, String email, boolean isClient) {
 		super();
 		this.idClientOpp = idClientOpp;
 		this.name = name;
 		this.lastname = lastname;
 		this.phone = phone;
 		this.email = email;
-		this.contacts = contacts;
+		this.contacts = new ArrayList<>();
 		this.isClient = isClient;
 	}
 
@@ -98,7 +98,7 @@ public class ClientOpportunity {
 	}
 
 
-	public boolean isClient() {
+	public boolean getClient() {
 		return isClient;
 	}
 
